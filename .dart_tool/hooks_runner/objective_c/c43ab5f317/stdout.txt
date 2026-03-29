@@ -1,0 +1,51 @@
+Running `(cd /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/; TMPDIR=/var/folders/72/b19__lk90kvgj2z2wpdzf7nm0000gn/T/ PATH=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pmk/env/global/bin:/Library/Apple/usr/bin:/Users/haru/flutter/bin HOME=/Users/haru /Users/haru/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/haru/Desktop/project/tabinikki/.dart_tool/package_config.json /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/objective_c/c43ab5f317/hook.dill --config=/Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/objective_c/c43ab5f317/input.json )`.
+INFO: 2026-03-29 18:44:40.184281: Running `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang --version`.
+
+INFO: 2026-03-29 18:44:40.194917: Running `/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang --version`.
+
+INFO: 2026-03-29 18:44:40.205780: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/include/dart_api_dl.c -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-03-29 18:44:40.206071: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.c -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.c.o
+
+INFO: 2026-03-29 18:44:40.206297: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.m -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.m.o
+
+ream_adapter.m.o
+
+INFO: 2026-03-29 18:44:40.206497: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/observer.m -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/observer.m.o
+
+INFO: 2026-03-29 18:44:40.206592: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/ns_number.m -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/ns_number.m.o
+
+INFO: 2026-03-29 18:44:40.206744: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/haru/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c_bindings_generated.m -fpic -I src -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-03-29 18:44:40.239886: 
+INFO: 2026-03-29 18:44:40.239992: 
+INFO: 2026-03-29 18:44:40.240031: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-03-29 18:44:40.240763: 
+INFO: 2026-03-29 18:44:40.240801: 
+INFO: 2026-03-29 18:44:40.240817: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.c.o
+
+INFO: 2026-03-29 18:44:40.256003: 
+INFO: 2026-03-29 18:44:40.256051: 
+INFO: 2026-03-29 18:44:40.256089: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/protocol.m.o
+
+INFO: 2026-03-29 18:44:40.260603: 
+INFO: 2026-03-29 18:44:40.260655: 
+INFO: 2026-03-29 18:44:40.260747: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/observer.m.o
+
+INFO: 2026-03-29 18:44:40.322193: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.m.o
+INFO: 2026-03-29 18:44:40.322254: 
+INFO: 2026-03-29 18:44:40.322262: 
+INFO: 2026-03-29 18:44:40.322269: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/ns_number.m.o
+
+INFO: 2026-03-29 18:44:40.348524: 
+INFO: 2026-03-29 18:44:40.348557: 
+INFO: 2026-03-29 18:44:40.348565: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-03-29 18:44:40.348804: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios -mios-version-min=13 /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/include/dart_api_dl.c.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.c.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/input_stream_adapter.m.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c.m.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/observer.m.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/ns_number.m.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/protocol.m.o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/obj/src/objective_c_bindings_generated.m.o -o /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/objective_c.dylib
+
+INFO: 2026-03-29 18:44:40.368884: 
+INFO: 2026-03-29 18:44:40.368936: ld: warning: -undefined dynamic_lookup is deprecated on iOS
+
+INFO: 2026-03-29 18:44:40.368945: Generated /Users/haru/Desktop/project/tabinikki/.dart_tool/hooks_runner/shared/objective_c/build/c43ab5f317/objective_c.dylib
+

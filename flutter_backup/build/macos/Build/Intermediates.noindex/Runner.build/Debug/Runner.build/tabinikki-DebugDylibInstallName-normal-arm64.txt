@@ -1,0 +1,1 @@
+@rpath/tabinikki.debug.dylib
