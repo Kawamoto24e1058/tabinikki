@@ -46,15 +46,25 @@
     path = await getLocations();
     markers = await getMarkers();
     
+    // Check for Secure Context (Required for Geolocation in many browsers)
+    if (!window.isSecureContext && window.location.hostname !== 'localhost') {
+      showToast('⚠️ 非セキュアな接続 (HTTP) のため、位置情報が利用できない可能性があります。HTTPS を使用してください。');
+    }
+
     // Check current position
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           currentPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         },
-        handleGeoError,
-        { enableHighAccuracy: true }
+        (err) => {
+          console.error('Initial Pos Error:', err);
+          handleGeoError(err);
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
       );
+    } else {
+      showToast('⚠️ お使いのブラウザ、または接続環境では位置情報がサポートされていません。');
     }
   });
 
