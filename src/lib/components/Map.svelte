@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
+  import { LocateFixed } from 'lucide-svelte';
   import type { LocationPoint, PhotoMarker } from '$lib/db';
 
   let { 
     path = [], 
     markers = [], 
-    currentPos = null 
+    currentPos = null,
+    isTracking = false
   } = $props();
 
   let mapElement: HTMLElement;
@@ -26,13 +28,19 @@
       maxZoom: 19
     }).addTo(map);
 
-    polyline = L.polyline([], { color: '#3b82f6', weight: 5 }).addTo(map);
+    polyline = L.polyline([], { 
+      color: '#FF0033', 
+      weight: 12,
+      className: 'neon-polyline',
+      lineCap: 'round',
+      lineJoin: 'round'
+    }).addTo(map);
     
     updateMap();
   });
 
   $effect(() => {
-    if (map && (path || markers || currentPos)) {
+    if (map && (path || markers || currentPos || isTracking !== undefined)) {
       updateMap();
     }
   });
@@ -46,21 +54,36 @@
 
     // Update Current Position Marker
     if (currentPos) {
+      const pulseHtml = `
+        <div class="pulse-container ${isTracking ? 'is-tracking' : ''}">
+          <div class="pulse-dot"></div>
+          ${isTracking ? '<div class="pulse-ring"></div>' : ''}
+        </div>
+      `;
+
       if (!currentMarker) {
         const pulseIcon = L.divIcon({
           className: 'current-pos-wrapper',
-          html: `<div class="pulse-container">
-                  <div class="pulse-ring"></div>
-                  <div class="pulse-dot"></div>
-                 </div>`,
-          iconSize: [60, 60],
-          iconAnchor: [30, 30]
+          html: pulseHtml,
+          iconSize: [200, 200],
+          iconAnchor: [100, 100]
         });
         currentMarker = L.marker([currentPos.lat, currentPos.lng], { icon: pulseIcon }).addTo(map);
       } else {
+        const pulseIcon = L.divIcon({
+          className: 'current-pos-wrapper',
+          html: pulseHtml,
+          iconSize: [200, 200],
+          iconAnchor: [100, 100]
+        });
         currentMarker.setLatLng([currentPos.lat, currentPos.lng]);
+        currentMarker.setIcon(pulseIcon);
       }
-      map.panTo([currentPos.lat, currentPos.lng]);
+      
+      // Auto-pan only on first lock or if it's the very first update
+      if (path.length <= 1 && isTracking) {
+        map.panTo([currentPos.lat, currentPos.lng]);
+      }
     }
 
     // Update Photo Markers
@@ -82,12 +105,33 @@
     });
   }
 
+  function centerOnCurrentLocation() {
+    if (map && currentPos) {
+      map.flyTo([currentPos.lat, currentPos.lng], 16, {
+        animate: true,
+        duration: 1.5
+      });
+    }
+  }
+
   onDestroy(() => {
     if (map) map.remove();
   });
 </script>
 
-<div bind:this={mapElement} class="w-full h-full z-0"></div>
+<div class="relative w-full h-full z-0">
+  <div bind:this={mapElement} class="w-full h-full"></div>
+
+  {#if currentPos}
+    <button 
+      onclick={centerOnCurrentLocation}
+      title="現在地に戻る"
+      class="absolute top-24 right-4 z-[1000] p-3 bg-white/90 backdrop-blur-md text-emerald-600 rounded-2xl shadow-[0_8px_20px_-4px_rgba(0,0,0,0.2)] hover:bg-white active:scale-90 transition-all cursor-pointer"
+    >
+      <LocateFixed size={26} strokeWidth={2.5} />
+    </button>
+  {/if}
+</div>
 
 <style>
   :global(.leaflet-container) {
@@ -95,42 +139,51 @@
     width: 100%;
   }
 
+  :global(.neon-polyline) {
+    filter: drop-shadow(0 0 8px rgba(255, 0, 51, 0.8)) drop-shadow(0 0 12px rgba(255, 0, 51, 0.5));
+  }
+
   :global(.pulse-container) {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 200px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   :global(.pulse-dot) {
-    width: 14px;
-    height: 14px;
-    background: #3b82f6;
-    border: 2px solid white;
+    width: 24px;
+    height: 24px;
+    background: #0033cc;
+    border: 3px solid white;
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 15px rgba(0, 51, 204, 0.8);
     z-index: 2;
+    transition: transform 0.3s ease;
+  }
+
+  :global(.pulse-container.is-tracking .pulse-dot) {
+    transform: scale(1.1);
   }
 
   :global(.pulse-ring) {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    background: rgba(59, 130, 246, 0.4);
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 102, 255, 0.5);
     border-radius: 50%;
     z-index: 1;
-    animation: pulse 2s infinite ease-out;
+    animation: -global-pulse-anim 1.5s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);
   }
 
-  @keyframes pulse {
+  @keyframes -global-pulse-anim {
     0% {
       transform: scale(1);
-      opacity: 0.8;
+      opacity: 0.9;
     }
     100% {
-      transform: scale(4);
+      transform: scale(8); /* 30px * 8 = 240px spread */
       opacity: 0;
     }
   }

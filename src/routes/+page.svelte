@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import Map from '$lib/components/Map.svelte';
   import BottomNav from '$lib/components/BottomNav.svelte';
-  import { Camera, MapPin, Trash2 } from 'lucide-svelte';
+  import { Camera, Trash2, Play, Square } from 'lucide-svelte';
   import { addLocation, getLocations, addMarker, getMarkers, clearAllData, type LocationPoint, type PhotoMarker } from '$lib/db';
 
   let path = $state<LocationPoint[]>([]);
@@ -12,6 +12,7 @@
   let watchId: number | null = null;
   let activeTab = $state<'map' | 'photos' | 'settings'>('map');
   let toastMessage = $state<string | null>(null);
+  let geoStatus = $state<string>('準備完了');
 
   function showToast(message: string) {
     toastMessage = message;
@@ -53,17 +54,21 @@
 
     // Check current position
     if (navigator.geolocation) {
+      geoStatus = '📡 取得中...';
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           currentPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          geoStatus = `📍 取得済 (精度: ${Math.round(pos.coords.accuracy)}m)`;
         },
         (err) => {
           console.error('Initial Pos Error:', err);
+          geoStatus = '❌ 取得エラー';
           handleGeoError(err);
         },
-        { enableHighAccuracy: true, timeout: 10000 }
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 }
       );
     } else {
+      geoStatus = '⚠️ サポート外';
       showToast('⚠️ お使いのブラウザ、または接続環境では位置情報がサポートされていません。');
     }
   });
@@ -73,8 +78,10 @@
       if (watchId !== null) navigator.geolocation.clearWatch(watchId);
       watchId = null;
       isTracking = false;
+      geoStatus = '⏹️ 追跡停止';
     } else {
       isTracking = true;
+      geoStatus = '🟢 追跡開始...';
       watchId = navigator.geolocation.watchPosition(
         async (pos) => {
           const point = { 
@@ -85,9 +92,13 @@
           currentPos = { lat: point.lat, lng: point.lng };
           await addLocation(point);
           path = [...path, point];
+          geoStatus = `🟢 追跡中 (精度: ${Math.round(pos.coords.accuracy)}m)`;
         },
-        handleGeoError,
-        { enableHighAccuracy: true, distanceFilter: 10 } as any
+        (err) => {
+          geoStatus = '❌ 追跡エラー';
+          handleGeoError(err);
+        },
+        { enableHighAccuracy: true, distanceFilter: 10, timeout: 15000 } as any
       );
     }
   }
@@ -136,7 +147,10 @@
   <header class="p-4 bg-white/80 backdrop-blur-md shadow-sm z-10 flex justify-between items-center">
     <div>
       <h1 class="text-xl font-extrabold text-emerald-600 tracking-tight">TabiNikki</h1>
-      <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Travel Log PWA</p>
+      <p class="text-[10px] text-gray-400 font-bold tracking-widest flex items-center gap-2">
+        <span>TRAVEL LOG PWA</span>
+        <span class="text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-sm">{geoStatus}</span>
+      </p>
     </div>
     <div class="flex gap-2">
       <button 
@@ -161,7 +175,7 @@
   <!-- Main Content -->
   <main class="flex-1 relative overflow-hidden">
     {#if activeTab === 'map'}
-      <Map {path} {markers} {currentPos} />
+      <Map {path} {markers} {currentPos} {isTracking} />
       
       <!-- Fixed Gradient Overlay for Buttons -->
       <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-emerald-50/80 to-transparent pointer-events-none z-30"></div>
@@ -174,9 +188,9 @@
             class="flex flex-col items-center gap-2 group"
           >
             <div class="w-18 h-18 bg-emerald-500 text-white rounded-full shadow-[0_10px_25px_-5px_rgba(16,185,129,0.5)] flex items-center justify-center active:scale-95 transition-all group-hover:bg-emerald-600">
-              <span class="text-3xl">✈️</span>
+              <Play size={32} class="ml-1" />
             </div>
-            <span class="text-xs font-extrabold text-emerald-700 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm shadow-sm">旅行開始</span>
+            <span class="text-xs font-extrabold text-emerald-700 bg-white/80 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm tracking-widest">START</span>
           </button>
         {:else}
           <button 
@@ -186,7 +200,7 @@
             <div class="w-16 h-16 bg-amber-500 text-white rounded-full shadow-[0_10px_25px_-5px_rgba(245,158,11,0.5)] flex items-center justify-center active:scale-95 transition-all group-hover:bg-amber-600">
               <Camera size={28} />
             </div>
-            <span class="text-xs font-extrabold text-amber-700 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm shadow-sm">撮影</span>
+            <span class="text-xs font-extrabold text-amber-700 bg-white/80 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm tracking-widest">PHOTO</span>
           </button>
 
           <button 
@@ -194,9 +208,9 @@
             class="flex flex-col items-center gap-2 group"
           >
             <div class="w-16 h-16 bg-rose-500 text-white rounded-full shadow-[0_10px_25px_-5px_rgba(244,63,94,0.5)] flex items-center justify-center active:scale-95 transition-all group-hover:bg-rose-600">
-              <div class="w-4 h-4 bg-white rounded-sm"></div>
+              <Square size={24} fill="currentColor" />
             </div>
-            <span class="text-xs font-extrabold text-rose-700 bg-white/80 px-3 py-1 rounded-full backdrop-blur-sm shadow-sm">旅行終了</span>
+            <span class="text-xs font-extrabold text-rose-700 bg-white/80 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm tracking-widest">STOP</span>
           </button>
         {/if}
       </div>
